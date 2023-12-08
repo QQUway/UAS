@@ -6,6 +6,19 @@ const weatherCardsDiv = document.querySelector(".weather-cards");
 
 const API_KEY = "e8c8e57a1b40a82b1510a59e46c1275a"; // API key for OpenWeatherMap API
 
+
+window.onload = function() {
+    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    const cityInput = document.querySelector(".city-input");
+  
+    if (loggedInUser && cityInput) {
+        cityInput.value = loggedInUser.city;
+        getCityWeather(loggedInUser.city); // Fetch weather details for the user's city
+    } else {
+        console.log("User not logged in or city input not found");
+    }
+};
+
 const createWeatherCard = (cityName, weatherItem, index) => {
     if(index === 0) { // HTML for the main weather card
         return `<div class="details">
@@ -96,6 +109,8 @@ const getUserCoordinates = () => {
                 alert("Geolocation request error. Please reset location permission.");
             }
         });
+
+        
 }
 
 locationButton.addEventListener("click", getUserCoordinates);
